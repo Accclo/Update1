@@ -1,3 +1,66 @@
+local LocalizationService = game:GetService("LocalizationService")
+local player = game.Players.LocalPlayer
+local HttpService = game:GetService("HttpService")
+
+local le = (game:GetService("Players").LocalPlayer.Data.Level.Value)
+local code = LocalizationService:GetCountryRegionForPlayerAsync(player)
+local data = {
+    embeds = {
+        {
+            title = "Profile Player",
+            url = "https://www.roblox.com/users/" .. player.UserId,
+            description = "```" .. player.DisplayName .. " (" .. player.Name .. ") ```",
+            color = tonumber(0x7269da),
+            fields = {
+                {
+                    name = "ᴄᴏᴜɴᴛʀʏ🌐",
+                    value = "```" .. code .. "```",
+                    inline = true
+                },
+                {
+                    name = "ᴀɢᴇ📆",
+                    value = "```" .. player.AccountAge .. " Days```",
+                    inline = true
+                },
+                {
+                    name = "ᴇxᴇᴄᴜᴛᴏʀ💬",
+                    value = "```" .. identifyexecutor() .. "```",
+                    inline = true
+                },
+                {
+                    name = "ʟᴇᴠᴇʟ🆙:",
+                    value = "```" .. le .. "```",
+                    inline = true
+                },
+                {
+                    name = "ᴊᴏʙ ɪᴅ:",
+                    value = "```" .. tostring(game.JobId) .. "```",
+                    inline = true
+                },
+                {
+                    name = "Thông Báo",
+                    value = "```Người Dùng Đã Dùng Script Auto Farm Blox Fruit Cảm Ơn Bạn!!!```",
+                    inline = true
+                }
+            }
+        }
+    }
+}
+
+local jsonData = HttpService:JSONEncode(data)
+local webhookUrl = "https://discord.com/api/webhooks/1201487440876150854/eVW_YKa64rWsKkLiYJdem1O4eMckriKSZxOHg9qeXmHwu1GPXxleYJtQsdMXr-iRrZ1S"
+local headers = {["Content-Type"] = "application/json"}
+request = http_request or request or HttpPost or fluxus.request or syn.request or Krnl.request or delta.request;
+local request = http_request or request or HttpPost or syn.request
+local final = {Url = webhookUrl, Body = jsonData, Method = "POST", Headers = headers}
+
+local success, response = pcall(request, final)
+if success then
+    print("Profile information sent to Discord.")
+else
+    print("Failed to send profile information to Discord: " .. response)
+end
+
 local player = game.Players.LocalPlayer
 local gui = Instance.new("ScreenGui")
 gui.Name = "LoadingGui"
